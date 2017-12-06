@@ -69,22 +69,25 @@
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
-    const alphabet = people.sort((a,b) => {
-      return b.toUpperCase() - a.toUpperCase();
+    const alphabet = people.sort((lastOne, nextOne) => {
+      const [aLast, aFirst] = lastOne.split(', '); // destructure names
+      const [bLast, bFirst] = nextOne.split(', '); // destructure names
+      return aLast > bLast ? 1 : -1;
+      //return b.toUpperCase() - a.toUpperCase();
     })
     console.log(alphabet);
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
-    const countVals = data.reduce((sum, next) => {
-      if (sum[next]) {
-        ++sum[next]
+    const countVals = data.reduce((obj, item) => {
+      if (obj[item]) {
+        ++obj[item]
       }
       else {
-        sum[next] = 1;
+        obj[item] = 1;
       }
-      return sum;
+      return obj;
     },{});
     console.log(countVals);
 
