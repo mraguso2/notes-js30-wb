@@ -130,7 +130,7 @@
     // create toggle active - move text from top and bottom onto/off screen
     function toggleActive(e) {
       console.log(e.propertyName);
-      if(e.propertyName === 'flex' || e.propertyName === 'flex-grow') {
+      if(e.propertyName === 'flex' || e.propertyName === 'flex-grow') { // e.propertyName.includes('flex')
         this.classList.toggle("open-active");
       }
     }
