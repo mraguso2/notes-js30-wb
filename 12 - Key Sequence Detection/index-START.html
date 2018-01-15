@@ -7,6 +7,22 @@
 </head>
 <body>
 <script>
+  const pressed = [];
+  const secretCode = 'mikeragu';
+
+  window.addEventListener('keyup', (e) => {
+    // add key pressed to pressed array
+    pressed.push(e.key);
+    // trim the pressed array to equal max length of secretCode
+    pressed.splice(-secretCode.length - 1, pressed.length - secretCode.length);
+    
+    console.log(pressed);
+
+    if (pressed.join('') === secretCode) {
+      console.log('You\'ve unlocked the secret!!');
+      cornify_add();
+    }
+  })
 </script>
 </body>
 </html>
