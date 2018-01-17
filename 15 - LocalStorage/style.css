@@ -67,12 +67,27 @@
       content: '⚡️';
     }
 
-    .add-items {
+    .add-items, .controls {
       margin-top: 20px;
     }
 
-    .add-items input {
+    .add-items input, .controls button {
       padding:10px;
       outline:0;
       border:1px solid rgba(0,0,0,0.1);
+    }
+
+    .controls button:hover {
+      /* box-sizing: border-box; */
+      border:1px solid rgba(0,0,0,0.4);
+    }
+
+    button:hover {
+      bottom: 2px;
+      position: relative;
+    }
+
+    button:active {
+      bottom: 0px;
+      position: relative;
     }

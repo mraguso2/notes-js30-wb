@@ -23,12 +23,18 @@
       <input type="text" name="item" placeholder="Item Name" required>
       <input type="submit" value="+ Add Item">
     </form>
+    <div class="controls">
+      <button type="button" name="checkAll">Check All</button>
+      <button type="button" name="uncheckAll">Uncheck All</button>
+      <button type="button" name="clearAll">Clear All</button>
+    </div>
   </div>
 
 <script>
   const addItems = document.querySelector('.add-items');
   const itemsList = document.querySelector('.plates');
   const items = JSON.parse(localStorage.getItem('items')) || []; // try to get it from localstorage
+  const controls = document.querySelectorAll('.controls button');
 
   function addItem(e) {
     e.preventDefault(); // stop page from reloading
@@ -68,20 +74,34 @@
     populateList(items, itemsList);
   }
 
+  function handleControl() {
+    if (this.name === 'clearAll') {
+      items.splice(0);
+    } else {
+      toggleAllChecks(items, this.name);
+    }
+    localStorage.setItem('items', JSON.stringify(items));
+    populateList(items, itemsList);
+  }
+
+  function toggleAllChecks(items, action) {
+    const status = action === 'checkAll' ? true : false
+    items.map(item => item.done = status);
+    return items;
+  }
+
+  function clearItems(items) {
+    items
+  }
 
   // listen to the submit event versus click to handle click, enter, anyway to submit
   addItems.addEventListener('submit', addItem);
-  itemsList.addEventListener('click', toggleDone)
+  itemsList.addEventListener('click', toggleDone);
+  controls.forEach(button => {
+    button.addEventListener('click', handleControl);
+  })
+
   populateList(items, itemsList);
-
-  // Challenge 3 buttons underneath add items
-  // Clear All
-  // Check ALl
-  // Uncheck all
-
-  // mirror to local storage and rerun populate lists
-
-
 </script>
 
 
