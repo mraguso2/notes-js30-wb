@@ -8,10 +8,58 @@
 
   <div class="words" contenteditable>
   </div>
+  <div class="dam">
+    <h4 id="guy">A Handsome fella &#x2192;</h4>
+    <img id="stick" src="https://scontent-iad3-1.xx.fbcdn.net/v/t1.0-9/21730882_10210075288254377_4606675980910355386_n.jpg?oh=9ad6a43d3ee5bbb4cfb631765a7a5da1&oe=5AFA11DA" alt="">
+    <h4 id="gal">&#x2190; Daam that a pretty lady</h4>
+  </div>
 
 <script>
   window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
+  const recognition = new SpeechRecognition();
+  recognition.interimResults = true; // will see what youre saying as you say it
+  recognition.lang = 'en-US'; /// set language
+
+  let p = document.createElement('p');
+  const words = document.querySelector('.words');
+  words.appendChild(p);
+
+  recognition.addEventListener('result', (e) => {
+    // nesty data
+    const transcript = Array.from(e.results)
+    .map(result => result[0])
+    .map(result => result.transcript)
+    .join('');
+
+    p.textContent = transcript
+    //
+    if (e.results[0].isFinal) {
+      p = document.createElement('p');
+      words.appendChild(p);
+    }
+
+    const guy = document.querySelector('#guy');
+    const gal = document.querySelector('#gal');
+    const stick = document.querySelector('#stick');
+
+    if (transcript.includes('left')) {
+      guy.classList.add('spoken');
+    }
+    if (transcript.includes('couple')) {
+      stick.classList.add('spoken');
+    }
+    if (transcript.includes('right')) {
+      gal.classList.add('spoken');
+    }
+
+    console.log(transcript);
+  })
+
+  // restart recognition once ended - end event = first time stop talking
+  recognition.addEventListener('end', recognition.start);
+
+  recognition.start();
 
 </script>
 
@@ -54,6 +102,40 @@
       border: 1px solid;
       border-color: transparent #efe4e4;
     }
+
+    .dam {
+      color: crimson;
+      display: flex;
+      height: 250px;
+      justify-content: space-around;
+      align-content: center;
+      overflow: hidden;
+    }
+
+    #stick {
+      width: 230px;
+      opacity:0;
+      transition: all 2s ease-in;
+    }
+
+    #stick.spoken {
+      opacity:1;
+    }
+
+    #guy {
+      transform: translateX(-200%);
+      transition: all 2s ease-in;
+    }
+
+    #gal {
+      transform: translateX(200%);
+      transition: all 2s ease-in;
+    }
+
+    #guy.spoken, #gal.spoken {
+      transform: translateX(0px);
+    }
+
   </style>
 
 </body>
