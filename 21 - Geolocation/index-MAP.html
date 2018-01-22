@@ -14,6 +14,8 @@
     <span class="units">KM/H</span>
   </h1>
 
+  <div id="map"></div>
+
   <style>
     html {
       font-size: 100px;
@@ -56,14 +58,20 @@
       font-size: 15px;
     }
     /*Compass: https://thenounproject.com/search/?q=compass&i=592352*/
+    #map {
+        height: 400px;
+        width: 100%;
+       }
   </style>
   <script>
     const arrow = document.querySelector('.arrow');
     const speed = document.querySelector('.speed-value');
-
+    var lat, lng;
     navigator.geolocation.watchPosition(function (data) {
       console.log(data);
       speed.textContent = data.coords.speed;
+      lat = data.coords.latitude;
+      lng = data.coords.longitude;
       // rotate number of degrees relative north
       arrow.style.transform = `rotate(${data.coords.heading}deg)`;
     }, function(err) {
@@ -72,6 +80,21 @@
       alert('Yo, you have to Allow that to happen for this shtuff to work');
     });
 
+    function initMap() {
+      var uluru = {lat: lat, lng: lng};
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 15,
+        center: uluru
+      });
+      var marker = new google.maps.Marker({
+        position: uluru,
+        map: map
+      });
+    }
   </script>
+  <!-- put in API KEY  -->
+  <script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=API-KEY&callback=initMap">
+</script>
 </body>
 </html>
