@@ -39,6 +39,42 @@
 
 <button></button>
 <script>
+  const divs = document.querySelectorAll('div');
+  const button = document.querySelector('button');
+
+  function logText(e) {
+    console.log(this.classList.value);
+    // e.stopPropagation(); // stop bubbling this event up
+  }
+
+  // bubble, capture: false default
+  // divs.forEach(div => div.addEventListener('click', logText));
+
+  // capture: true - run function on the way down vs bubble on the way up
+  // divs.forEach(div => div.addEventListener('click', logText, {capture: true}));
+
+  // once - will remove event listener after it runs once
+  divs.forEach(div => div.addEventListener('click', logText, {
+    capture: false,
+    once: true
+  }));
+
+  button.addEventListener('click', () =>{
+    console.log('Click!!!');
+  } ,{
+    once: true // good for store check outs
+  })
+
+  /* bubbling: browser will figure out what you clicked on but it will also trigger
+   * clicks up the parent elements that have the same event listener on it
+   */
+
+  /* Browser will do a capture first - it will go down from html to indivi element
+   * and then it will bubble up - fire events
+   */
+
+  /*
+   */
 
 </script>
 </body>
