@@ -135,11 +135,10 @@
   .trigger-enter .dropdown {
     display: block;
   }
-
+  /* ^ set display first, then opacity below to allow for animation */
   .trigger-enter-active .dropdown {
     opacity: 1;
   }
-
 
 
   .dropdownBackground {
@@ -214,6 +213,43 @@
 </style>
 
 <script>
+  const triggers = document.querySelectorAll('.cool > li'); // all direct li descendants of .cool
+  const background = document.querySelector('.dropdownBackground');
+  const nav = document.querySelector('.top');
+
+  function handleEnter() {
+    this.classList.add('trigger-enter');
+    // adding second class after 150 ms to handle display, opacity change and use an animation
+    setTimeout(() => this.classList.contains('trigger-enter') && this.classList.add('trigger-enter-active'), 150);
+    background.classList.add('open');
+
+    // grab dropdown off of this object and get coords
+    const dropdown = this.querySelector('.dropdown');
+    const dropdownCoords = dropdown.getBoundingClientRect();
+    const navCoords = nav.getBoundingClientRect();
+
+    // need to do the math yourself to handle if white background is not anchored to the top
+    const coords = {
+      height: dropdownCoords.height,
+      width: dropdownCoords.width,
+      top: dropdownCoords.top - navCoords.top,
+      left: dropdownCoords.left - navCoords.left
+    };
+
+    background.style.setProperty('width', `${coords.width}px`);
+    background.style.setProperty('height', `${coords.height}px`);
+    background.style.setProperty('transform', `translate(${coords.left}px, ${coords.top}px`);
+
+  }
+
+  function handleLeave() {
+    this.classList.remove('trigger-enter', 'trigger-enter-active');
+    background.classList.remove('open');
+  }
+
+  triggers.forEach(trigger => trigger.addEventListener('mouseenter', handleEnter));
+  triggers.forEach(trigger => trigger.addEventListener('mouseleave', handleLeave));
+
 </script>
 
 </body>
