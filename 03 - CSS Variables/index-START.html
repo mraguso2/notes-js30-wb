@@ -27,7 +27,7 @@
       --spacing: 10px;
       --blur: 10px;
     }
-    
+
     img {
       padding: var(--spacing);
       background: var(--base);
@@ -63,11 +63,11 @@
   <script>
     // grabbing all the inputs
     const inputs = document.querySelectorAll('.controls input');
-    
-    // handle input change event 
-    function handleUpdate() {
-      const suffix = this.dataset.sizing || "" // need OR operator no "px" needed if color input
 
+    // handle input change event
+    function handleUpdate() {
+      // dont need to pass event because you can just reference "this" object
+      const suffix = this.dataset.sizing || "" // need OR operator no "px" needed if color input
       document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix) //style.setProperty(propertyName, value, priority);
       console.log(this.name);
     }
