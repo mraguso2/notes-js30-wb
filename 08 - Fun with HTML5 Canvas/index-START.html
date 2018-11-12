@@ -8,8 +8,9 @@
 <canvas id="draw" width="800" height="800"></canvas>
 <script>
   const canvas = document.querySelector('#draw');
-  // You draw on something called the context
+  // You draw on something called the context - can be 2d or 3d(video games)
   const ctx = canvas.getContext('2d');
+  // resize the canvas - default 800 by 800
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
   ctx.strokeStyle = '#BADA55';
@@ -35,7 +36,7 @@
     ctx.lineTo(e.offsetX, e.offsetY);
     ctx.stroke();
     [lastX, lastY] = [e.offsetX, e.offsetY]
-    
+
     hue++;
     if (hue >= 360) {
       hue = 0;
@@ -45,7 +46,7 @@
       direction = !direction;
     }
     if (direction) {
-      ctx.lineWidth++; // incrementing from 1 to 100 
+      ctx.lineWidth++; // incrementing from 1 to 100
     } else {
       ctx.lineWidth--; // decrementing from 100 to 1
     }
@@ -53,7 +54,8 @@
   }
   canvas.addEventListener('mousedown', (e) => {
     isDrawing = true;
-    [lastX, lastY] = [e.offsetX, e.offsetY]; // before mousemove will set x and y
+    // update last X and Y - runs before mousemove will set starting x and y
+    [lastX, lastY] = [e.offsetX, e.offsetY];
   });
 
   canvas.addEventListener('mousemove', draw);
